@@ -1,0 +1,5 @@
+a.500kbps
+b.t = 32000 / 500kbps = 64s
+c.v = 100kbps	t = 32000 / 100 = 320s
+
+注意计算机中的B是byte（字节），网络中的b是bit（比特）。1B = 8b，即1byte = 8bit
