@@ -1,0 +1,52 @@
+答案不唯一，网上寻找得答案
+
+Msg name	purpose
+
+HELO <userid>	Let server know that there is a card in the ATM machine . ATM card transmits user ID to Server
+
+PASSWD <passwd>	User enters PIN, which is sent to server . BALANCE User requests balance
+
+WITHDRAWL <amount>	User asks to withdraw money . BYE user all done
+
+
+从服务器至ATM机器的信息（显示）
+Msg name	purpose
+
+PASSWD	Ask user for PIN (password)
+
+OK	last requested operation (PASSWD, WITHDRAWL) OK
+
+ERR	last requested operation (PASSWD, WITHDRAWL) in ERROR
+
+AMOUNT <amt>	sent in response to BALANCE request
+
+BYE	user done, display welcome screen at ATM
+
+
+正确回应：
+client	server
+HELO (userid)	————–> (check if valid userid)
+		<————- PASSWD
+PASSWD <passwd>	————–> (check password)
+			<————- OK (password is OK)
+BALANCE			————–>
+			<------------- AMOUNT ``
+WITHDRAWL <amt>	————–> check if enough $ to cover withdrawl
+			<————- OK
+ATM dispenses $	
+BYE			————–>
+			<————- BYE
+钱不够的情况下：
+
+|client | server |
+|——-|——–|
+|HELO (userid) 	 ————–> (check if valid userid) |
+		<------------- PASSWD | |PASSWD 
+		|--------------> (check password) |
+		<------------- OK (password is OK) |
+|BALANCE 	|--------------> |
+|		| <------------- AMOUNT|
+|WITHDRAWL` 	|————–> check if enough $ to cover |
+withdrawl ||
+| |<------------- ERR (not enough funds) | |error msg displayed || |no $ given out || |BYE |--------------> |
+| | <————- BYE|
